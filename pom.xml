@@ -14,4 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub emil-ep Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/emil-ep/xpense-common</url>
+        </repository>
+    </distributionManagement>
+
 </project>
