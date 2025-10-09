@@ -28,7 +28,21 @@ below steps
         </repositories>
    </profile>
 ```
-3. Take a build using `mvn clean install`
-4. Push it to the artifactory using `mvn deploy`
+3. Update < server > section with the below details
+```
+   <server>
+      <id>github</id>
+      <username>emil-ep</username>
+      <password>CLASSIC TOKEN WITH READ WRITE PACKAGE PERMISSION</password>
+   </server>
+```
+4. Update <activeProfile > section
+```
+   <activeProfiles>
+      <activeProfile>github</activeProfile>
+   </activeProfiles>
+```
+5. Take a build using `mvn clean install`
+6. Push it to the artifactory using `mvn deploy`
 
 ### Make sure you update changelog.md before your publish a new package
