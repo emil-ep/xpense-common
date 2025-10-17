@@ -1,10 +1,19 @@
 package org.xperia.models;
 
-public class MutualFundDailyData {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
+public class MutualFundDailyData implements Serializable {
+
+    @JsonProperty("date")
     private String date;
 
+    @JsonProperty("nav")
     private String nav;
+
+    public MutualFundDailyData() {
+    }
 
     public MutualFundDailyData(String date, String nav) {
         this.date = date;

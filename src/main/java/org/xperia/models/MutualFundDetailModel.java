@@ -1,72 +1,40 @@
 package org.xperia.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class MutualFundDetailModel implements Serializable {
 
-    private String fundHouse;
+    @JsonProperty("meta")
+    private MutualFundMetaData meta;
 
-    private String schemeType;
-
-    private String schemeCategory;
-
-    private String schemeCode;
-
-    private String schemeName;
-
-    private String isinGrowth;
-
-    private String isinDivReinvestment;
-
+    @JsonProperty("data")
     private List<MutualFundDailyData> data;
 
     public MutualFundDetailModel(){
 
     }
 
-    public MutualFundDetailModel(String fundHouse, String schemeType, String schemeCategory,
-                                 String schemeCode, String schemeName, String isinGrowth,
-                                 String isinDivReinvestment, List<MutualFundDailyData> data){
-        this.fundHouse = fundHouse;
-        this.schemeType = schemeType;
-        this.schemeCategory = schemeCategory;
-        this.schemeCode = schemeCode;
-        this.schemeName = schemeName;
-        this.isinGrowth = isinGrowth;
-        this.isinDivReinvestment = isinDivReinvestment;
+    public MutualFundDetailModel(MutualFundMetaData meta, List<MutualFundDailyData> data){
+        this.meta = meta;
         this.data = data;
     }
 
-    public String getFundHouse() {
-        return fundHouse;
+    public MutualFundMetaData getMeta() {
+        return meta;
     }
 
-    public String getSchemeType() {
-        return schemeType;
-    }
-
-    public String getSchemeCategory() {
-        return schemeCategory;
-    }
-
-    public String getSchemeCode() {
-        return schemeCode;
-    }
-
-    public String getSchemeName() {
-        return schemeName;
-    }
-
-    public String getIsinGrowth() {
-        return isinGrowth;
-    }
-
-    public String getIsinDivReinvestment() {
-        return isinDivReinvestment;
+    public void setMeta(MutualFundMetaData meta) {
+        this.meta = meta;
     }
 
     public List<MutualFundDailyData> getData() {
         return data;
+    }
+
+    public void setData(List<MutualFundDailyData> data) {
+        this.data = data;
     }
 }
