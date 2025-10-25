@@ -10,3 +10,9 @@
 
 [2.0.0]
 - Moving common entities and jpa repositories to common module
+
+[2.0.1]
+- Made kafka topic names to an enum
+
+[2.0.2]
+- Moved postgresql package to common
