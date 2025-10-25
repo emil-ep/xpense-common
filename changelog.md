@@ -7,3 +7,6 @@
 
 [1.0.5]
 - Correctly mapped the MutualFundDetail Model
+
+[2.0.0]
+- Moving common entities and jpa repositories to common module
