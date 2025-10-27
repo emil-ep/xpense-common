@@ -1,0 +1,41 @@
+package org.xperia.entities.mf;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
+
+@Entity(name = "mf_scheme_detail")
+@NoArgsConstructor
+@Getter
+public class MutualFundSchemeDetail {
+
+    @Id
+    private String code;
+
+    private String type;
+
+    private String category;
+
+    private String fundHouse;
+
+    private String name;
+
+    @JdbcTypeCode(Types.OTHER)
+    @Column(columnDefinition = "jsonb")
+    private JsonNode payload;
+
+    public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name, JsonNode payload){
+        this.code = code;
+        this.type = type;
+        this.category = category;
+        this.fundHouse = fundHouse;
+        this.name = name;
+        this.payload = payload;
+    }
+}

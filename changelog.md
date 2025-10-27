@@ -16,3 +16,6 @@
 
 [2.0.2]
 - Moved postgresql package to common
+
+[2.0.5]
+- Added MutualFundSchemeDetail entity and repository
