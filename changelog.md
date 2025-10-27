@@ -22,3 +22,6 @@
 
 [2.0.8]
 - Moved services and implementations of the mf to common module
+
+[2.0.10]
+- bug fixed

@@ -7,6 +7,7 @@ import org.xperia.repository.mf.MutualFundSchemeRepository;
 import org.xperia.service.MutualFundSchemeService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MutualFundSchemeServiceImpl implements MutualFundSchemeService {
@@ -17,5 +18,10 @@ public class MutualFundSchemeServiceImpl implements MutualFundSchemeService {
     @Override
     public void saveAllSchemes(List<MutualFundScheme> schemes) {
         mfSchemeRepository.saveAll(schemes);
+    }
+
+    @Override
+    public Optional<List<MutualFundScheme>> findAllSchemes() {
+        return Optional.of(mfSchemeRepository.findAll());
     }
 }
