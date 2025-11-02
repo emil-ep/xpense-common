@@ -25,3 +25,6 @@
 
 [2.0.10]
 - bug fixed
+
+[2.0.11]
+- Introduced util for mutualfund processing
