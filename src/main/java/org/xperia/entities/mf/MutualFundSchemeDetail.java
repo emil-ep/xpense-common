@@ -26,16 +26,23 @@ public class MutualFundSchemeDetail {
 
     private String name;
 
+    private Double growth;
+
+    private Double growthPercent;
+
     @JdbcTypeCode(Types.OTHER)
     @Column(columnDefinition = "jsonb")
     private JsonNode payload;
 
-    public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name, JsonNode payload){
+    public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name,
+                                  JsonNode payload, Double growth, Double growthPercent){
         this.code = code;
         this.type = type;
         this.category = category;
         this.fundHouse = fundHouse;
         this.name = name;
         this.payload = payload;
+        this.growth = growth;
+        this.growthPercent = growthPercent;
     }
 }
