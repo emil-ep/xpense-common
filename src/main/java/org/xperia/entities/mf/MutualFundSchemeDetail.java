@@ -2,11 +2,12 @@ package org.xperia.entities.mf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
+import org.xperia.entities.JsonNodeConverter;
 
 import java.sql.Types;
 
@@ -30,7 +31,7 @@ public class MutualFundSchemeDetail {
 
     private Double growthPercent;
 
-    @JdbcTypeCode(Types.OTHER)
+    @Convert(converter = JsonNodeConverter.class)
     @Column(columnDefinition = "jsonb")
     private JsonNode payload;
 

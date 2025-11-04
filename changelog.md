@@ -28,3 +28,6 @@
 
 [2.0.11]
 - Introduced util for mutualfund processing
+
+[2.1.1]
+- Introduced api to fetch mutual fund schemes
