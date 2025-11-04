@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.xperia.entities.JsonNodeConverter;
 
-import java.sql.Types;
 
 @Entity(name = "mf_scheme_detail")
 @NoArgsConstructor

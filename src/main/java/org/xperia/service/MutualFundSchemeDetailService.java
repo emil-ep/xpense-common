@@ -3,6 +3,7 @@ package org.xperia.service;
 
 import org.springframework.data.domain.Page;
 import org.xperia.entities.mf.MutualFundSchemeDetail;
+import org.xperia.models.MFSchemeDetailSearchUIResponseModel;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface MutualFundSchemeDetailService {
 
     MutualFundSchemeDetail save(MutualFundSchemeDetail scheme);
 
-    Page<MutualFundSchemeDetail> fetchDetails(int pageNo, int size, String search);
+    Page<MFSchemeDetailSearchUIResponseModel> fetchDetails(int pageNo, int size, String search);
 }
