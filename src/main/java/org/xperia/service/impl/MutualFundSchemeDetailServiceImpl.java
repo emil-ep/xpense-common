@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.xperia.entities.mf.MutualFundSchemeDetail;
+import org.xperia.models.MFSchemeDetailSearchUIResponseModel;
 import org.xperia.repository.mf.MutualFundSchemeDetailRepository;
 import org.xperia.service.MutualFundSchemeDetailService;
 
@@ -31,7 +32,7 @@ public class MutualFundSchemeDetailServiceImpl implements MutualFundSchemeDetail
     }
 
     @Override
-    public Page<MutualFundSchemeDetail> fetchDetails(int pageNo, int size, String search) {
+    public Page<MFSchemeDetailSearchUIResponseModel> fetchDetails(int pageNo, int size, String search) {
 
         Page<MutualFundSchemeDetail> details;
         Pageable pageable = PageRequest.of(pageNo, size);
@@ -40,9 +41,14 @@ public class MutualFundSchemeDetailServiceImpl implements MutualFundSchemeDetail
         }else{
             details = repository.findAll(pageable);
         }
-
-        return details;
+        return details.map(scheme -> new MFSchemeDetailSearchUIResponseModel(
+                scheme.getCode(),
+                scheme.getType(),
+                scheme.getCategory(),
+                scheme.getFundHouse(),
+                scheme.getName(),
+                scheme.getGrowth(),
+                scheme.getGrowthPercent()
+        ));
     }
-
-
 }
