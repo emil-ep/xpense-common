@@ -4,27 +4,36 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.postgresql.util.PGobject;
 
 @Converter(autoApply = false)
-public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
+public class JsonNodeConverter implements AttributeConverter<JsonNode, PGobject> {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(JsonNode attribute) {
+    public PGobject convertToDatabaseColumn(JsonNode attribute) {
+        if (attribute == null) return null;
+
         try {
-            return attribute == null ? null : objectMapper.writeValueAsString(attribute);
+            PGobject jsonObject = new PGobject();
+            jsonObject.setType("jsonb");
+            jsonObject.setValue(attribute == null ? null : objectMapper.writeValueAsString(attribute));
+            return jsonObject;
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error converting JsonNode to String", e);
+            throw new RuntimeException("Could not convert JsonNode to PGobject", e);
         }
     }
 
     @Override
-    public JsonNode convertToEntityAttribute(String dbData) {
+    public JsonNode convertToEntityAttribute(PGobject dbData) {
+
         try {
-            return dbData == null ? null : objectMapper.readTree(dbData);
+            return dbData == null || dbData.getValue() == null
+                    ? null
+                    : objectMapper.readTree(dbData.getValue());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error converting String to JsonNode", e);
+            throw new RuntimeException("Could not convert PGobject to JsonNode", e);
         }
     }
 }
