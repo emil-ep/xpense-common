@@ -1,18 +1,18 @@
 package org.xperia.entities.mf;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.xperia.entities.JsonNodeConverter;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 
 @Entity(name = "mf_scheme_detail")
 @NoArgsConstructor
 @Getter
+@Setter
+@Access(AccessType.FIELD)
 public class MutualFundSchemeDetail {
 
     @Id
@@ -30,12 +30,12 @@ public class MutualFundSchemeDetail {
 
     private Double growthPercent;
 
-    @Convert(converter = JsonNodeConverter.class)
     @Column(columnDefinition = "jsonb")
-    private JsonNode payload;
+    @Type(JsonBinaryType.class)
+    private String payload;
 
     public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name,
-                                  JsonNode payload, Double growth, Double growthPercent){
+                                  String payload, Double growth, Double growthPercent){
         this.code = code;
         this.type = type;
         this.category = category;
