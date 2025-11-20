@@ -1,11 +1,11 @@
 package org.xperia.entities.mf;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 
 @Entity(name = "mf_scheme_detail")
@@ -31,7 +31,7 @@ public class MutualFundSchemeDetail {
     private Double growthPercent;
 
     @Column(columnDefinition = "jsonb")
-    @Type(JsonBinaryType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     private String payload;
 
     public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name,
