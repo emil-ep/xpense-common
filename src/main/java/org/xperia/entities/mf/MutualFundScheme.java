@@ -19,11 +19,14 @@ public class MutualFundScheme {
 
     private String isInDivReInvestment;
 
+    private Long lastUpdated;
 
-    public MutualFundScheme(String code, String name, String isInGrowth, String isInDivReInvestment){
+
+    public MutualFundScheme(String code, String name, String isInGrowth, String isInDivReInvestment, Long lastUpdated){
         this.code = code;
         this.name = name;
         this.isInGrowth = isInGrowth;
         this.isInDivReInvestment = isInDivReInvestment;
+        this.lastUpdated = lastUpdated;
     }
 }

@@ -34,8 +34,10 @@ public class MutualFundSchemeDetail {
     @JdbcTypeCode(SqlTypes.JSON)
     private String payload;
 
+    private Long lastUpdated;
+
     public MutualFundSchemeDetail(String code, String type, String category, String fundHouse, String name,
-                                  String payload, Double growth, Double growthPercent){
+                                  String payload, Double growth, Double growthPercent, Long lastUpdated){
         this.code = code;
         this.type = type;
         this.category = category;
@@ -44,5 +46,6 @@ public class MutualFundSchemeDetail {
         this.payload = payload;
         this.growth = growth;
         this.growthPercent = growthPercent;
+        this.lastUpdated = lastUpdated;
     }
 }
