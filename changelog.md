@@ -31,3 +31,6 @@
 
 [2.1.1]
 - Introduced api to fetch mutual fund schemes
+
+[2.1.13]
+- Introduced last updated variable to mf_scheme and scheme_detail tables
