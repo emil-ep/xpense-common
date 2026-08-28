@@ -34,3 +34,6 @@
 
 [2.1.13]
 - Introduced last updated variable to mf_scheme and scheme_detail tables
+
+[2.1.15]
+- Added Google client with basic functionalities like refreshToken and mail fetch
