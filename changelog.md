@@ -37,3 +37,6 @@
 
 [2.1.15]
 - Added Google client with basic functionalities like refreshToken and mail fetch
+
+[2.1.16]
+- migrated common dependencies to xpense-common package
