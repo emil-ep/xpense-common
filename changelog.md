@@ -40,3 +40,6 @@
 
 [2.1.16]
 - migrated common dependencies to xpense-common package
+
+[2.1.17]
+- introduced UserOauthToken model for internal service to service transactions
