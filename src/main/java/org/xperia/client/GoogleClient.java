@@ -18,10 +18,10 @@ public class GoogleClient {
         this.restTemplate = restTemplate;
     }
 
-    public String getMessages(String accessToken){
+    public String getMessages(String accessToken, String labelId){
 
         String url = "https://gmail.googleapis.com/gmail/v1/users/me/messages" +
-                "?q=has:attachment";
+                "?labelIds=" + labelId;
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(accessToken);
 
