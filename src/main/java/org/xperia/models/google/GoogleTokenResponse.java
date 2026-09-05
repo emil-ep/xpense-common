@@ -1,4 +1,4 @@
-package org.xperia.models;
+package org.xperia.models.google;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
