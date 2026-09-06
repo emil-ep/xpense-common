@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.xperia.models.google.GoogleMailLabelResponse;
 import org.xperia.models.google.GoogleTokenResponse;
 
 @Component
-public class GoogleClient {
+public class GoogleClient extends AbstractHttpClient{
 
-    private final RestTemplate restTemplate;
 
     @Autowired
     public GoogleClient(RestTemplate restTemplate){
-        this.restTemplate = restTemplate;
+        super(restTemplate);
     }
 
     /**
@@ -23,20 +23,13 @@ public class GoogleClient {
      * @param accessToken The google oauth token of the user
      * @return list of labels and their ids in string format
      */
-    public String getLabelIds(String accessToken){
+    public GoogleMailLabelResponse getLabelIds(String accessToken){
 
         String url = "https://gmail.googleapis.com/gmail/v1/users/me/labels";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(accessToken);
 
-        HttpEntity<Void> request = new HttpEntity<>(httpHeaders);
-        ResponseEntity<String> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.GET,
-                        request,
-                        String.class
-                );
+        ResponseEntity<GoogleMailLabelResponse> response = executeGet(url, httpHeaders, GoogleMailLabelResponse.class);
         return response.getBody();
     }
 
@@ -53,20 +46,13 @@ public class GoogleClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(accessToken);
 
-        HttpEntity<Void> request = new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<String> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.GET,
-                        request,
-                        String.class
-                );
+        ResponseEntity<String> response = executeGet(url, httpHeaders, String.class);
         return response.getBody();
     }
 
     public GoogleTokenResponse refreshAccessToken(String refreshToken, String clientId, String clientSecret){
 
+        String url = "https://oauth2.googleapis.com/token";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -75,14 +61,7 @@ public class GoogleClient {
         body.add("refresh_token", refreshToken);
         body.add("grant_type", "refresh_token");
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<GoogleTokenResponse> response =
-                restTemplate.exchange(
-                        "https://oauth2.googleapis.com/token",
-                        HttpMethod.POST,
-                        request,
-                        GoogleTokenResponse.class
-                );
+        ResponseEntity<GoogleTokenResponse> response = executePost(url, body, httpHeaders, GoogleTokenResponse.class);
         GoogleTokenResponse tokenResponse = response.getBody();
         if (tokenResponse == null || tokenResponse.getAccessToken() == null) {
             throw new IllegalStateException(
