@@ -46,3 +46,6 @@
 
 [2.1.21]
 - Introduced AbstractHttpClient to handle http request
+
+[2.1.22]
+- Introduced SharedUserSetting object to transfer user settings without exposing PII information
