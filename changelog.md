@@ -49,3 +49,6 @@
 
 [2.1.22]
 - Introduced SharedUserSetting object to transfer user settings without exposing PII information
+
+[2.1.24]
+- Added Fetch user profile functionality for Google Client

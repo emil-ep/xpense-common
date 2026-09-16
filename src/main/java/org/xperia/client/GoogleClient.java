@@ -7,6 +7,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.xperia.models.google.GoogleMailLabelResponse;
+import org.xperia.models.google.GoogleProfileResponse;
 import org.xperia.models.google.GoogleTokenResponse;
 
 @Component
@@ -69,5 +70,19 @@ public class GoogleClient extends AbstractHttpClient{
             );
         }
         return tokenResponse;
+    }
+
+    /**
+     * This function returns the google user profile
+     * @param accessToken The access token of the user
+     * @return returns the profile details of the user
+     */
+    public GoogleProfileResponse fetchUserProfile(String accessToken){
+        String url = "https://gmail.googleapis.com/gmail/v1/users/me/profile";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(accessToken);
+
+        ResponseEntity<GoogleProfileResponse> response = executeGet(url, httpHeaders, GoogleProfileResponse.class);
+        return response.getBody();
     }
 }
