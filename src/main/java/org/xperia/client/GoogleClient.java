@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.xperia.models.google.GoogleHistoryResponse;
 import org.xperia.models.google.GoogleMailLabelResponse;
 import org.xperia.models.google.GoogleProfileResponse;
 import org.xperia.models.google.GoogleTokenResponse;
@@ -83,6 +84,28 @@ public class GoogleClient extends AbstractHttpClient{
         httpHeaders.setBearerAuth(accessToken);
 
         ResponseEntity<GoogleProfileResponse> response = executeGet(url, httpHeaders, GoogleProfileResponse.class);
+        return response.getBody();
+    }
+
+    /**
+     * This function returns the history items from the history Api. This function requires a startHistoryId and labelId
+     * with which we should be filtering the responses.
+     * @param accessToken the access token of the user to fetch the history
+     * @param startHistoryId the historyId from which we need to fetch the newer ones
+     * @param labelId The label Id with which we need to filter the message
+     * @return the history response from google gmail api
+     */
+    public GoogleHistoryResponse fetchHistory(String accessToken, String startHistoryId, String labelId){
+
+        String url = "https://gmail.googleapis.com/gmail/v1/users/me/history" +
+                "?startHistoryId=" +
+                startHistoryId +
+                "&labelId=" +
+                labelId;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(accessToken);
+
+        ResponseEntity<GoogleHistoryResponse> response = executeGet(url, httpHeaders, GoogleHistoryResponse.class);
         return response.getBody();
     }
 }
