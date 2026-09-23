@@ -59,3 +59,5 @@
 [2.1.25]
 - Created fetch History function in GoogleClient
 
+[2.1.26]
+- Added Kafka topic for hosting messageId from history
