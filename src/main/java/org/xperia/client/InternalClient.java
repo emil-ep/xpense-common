@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -136,10 +135,13 @@ public class InternalClient extends AbstractHttpClient {
 
     public UserOauthToken findUserAuthToken(String userId){
 
-        String url = trackerUrl + "/api/internal/users/google?userId=" + userId;
+        String url = new StringBuilder(trackerUrl)
+                .append("/api/internal/users/")
+                .append(userId)
+                .append("/google")
+                .toString();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(username, password);
-        HttpEntity<Void> request = new HttpEntity<>(httpHeaders);
         try{
             ResponseEntity<SuccessResponse<UserOauthToken>> response = this.executeGet(
                     url,
