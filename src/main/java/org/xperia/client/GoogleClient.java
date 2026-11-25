@@ -52,6 +52,22 @@ public class GoogleClient extends AbstractHttpClient{
         return response.getBody();
     }
 
+    /**
+     * The function fetches a full gmail message content based on the messageId provided
+     * @param accessToken The google oauth token of the user
+     * @param messageId The messageId of which the content needs to be fetched
+     * @return The message content
+     */
+    public String getMessage(String accessToken, String messageId){
+
+        String url = "https://gmail.googleapis.com/gmail/v1/users/me/messages/" + messageId +
+                "?format=full";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(accessToken);
+        ResponseEntity<String> response = executeGet(url, httpHeaders, String.class);
+        return response.getBody();
+    }
+
     public GoogleTokenResponse refreshAccessToken(String refreshToken, String clientId, String clientSecret){
 
         String url = "https://oauth2.googleapis.com/token";

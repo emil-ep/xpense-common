@@ -61,3 +61,6 @@
 
 [2.1.26]
 - Added Kafka topic for hosting messageId from history
+
+[2.1.27]
+- Moved internal client to xpense-common
