@@ -64,3 +64,6 @@
 
 [2.1.27]
 - Moved internal client to xpense-common
+
+[2.1.28]
+- Fixed issues with Internal client response parsing

@@ -1,5 +1,6 @@
 package org.xperia.client;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,10 +17,23 @@ public abstract class AbstractHttpClient {
     }
 
 
+    /*
+    GET METHODS
+     */
     protected <R> ResponseEntity<R> executeGet(String url, HttpHeaders httpHeaders,  Class<R> responseType){
         return execute(url, HttpMethod.GET,  httpHeaders, responseType);
     }
 
+    protected <R> ResponseEntity<R> executeGet(
+            String url,
+            HttpHeaders headers,
+            ParameterizedTypeReference<R> responseType) {
+        return execute(url, HttpMethod.GET, null, headers, responseType);
+    }
+
+    /*
+    POST METHODS
+     */
     protected <T, R> ResponseEntity<R> executePost(
             String url,
             T body,
@@ -29,6 +43,14 @@ public abstract class AbstractHttpClient {
         return execute(url, HttpMethod.POST, body, httpHeaders, responseType);
     }
 
+    protected <T, R> ResponseEntity<R> executePost(
+            String url,
+            T body,
+            HttpHeaders headers,
+            ParameterizedTypeReference<R> responseType) {
+        return execute(url, HttpMethod.POST, body, headers, responseType);
+    }
+
     protected <T, R> ResponseEntity<R> executePut(
             String url,
             T body,
@@ -36,6 +58,16 @@ public abstract class AbstractHttpClient {
             Class<R> responseType){
 
         return execute(url, HttpMethod.PUT, body, httpHeaders, responseType);
+    }
+
+    protected <T, R> ResponseEntity<R> execute(
+            String url,
+            HttpMethod method,
+            T body,
+            HttpHeaders headers,
+            ParameterizedTypeReference<R> responseType) {
+        HttpEntity<T> request = new HttpEntity<>(body, headers);
+        return restTemplate.exchange(url, method, request, responseType);
     }
 
     protected <R> ResponseEntity<R> execute(String url,

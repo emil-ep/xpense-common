@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.xperia.models.SharedMailDetails;
 import org.xperia.models.SharedUserSetting;
 import org.xperia.models.UserOauthToken;
+import org.xperia.models.response.SuccessResponse;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -52,12 +52,19 @@ public class InternalClient extends AbstractHttpClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(username, password);
         try{
-            ResponseEntity<SharedUserSetting> response = this.executeGet(url, httpHeaders, SharedUserSetting.class);
-            return response.getBody();
+            ResponseEntity<SuccessResponse<SharedUserSetting>> response = this.executeGet(
+                    url,
+                    httpHeaders,
+                    new ParameterizedTypeReference<>() {}
+            );
+            if (response.getBody() != null){
+                return response.getBody().getData();
+            }
+            LOGGER.error("findUserSettingByType response returned body as null");
         }catch (Exception ex){
             LOGGER.error("Error fetching user settings from tracker service : {}", ex.getMessage(), ex);
-            throw ex;
         }
+        return null;
     }
 
     public SharedMailDetails findMailDetailsOfUser(String email) {
@@ -68,12 +75,19 @@ public class InternalClient extends AbstractHttpClient {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(username, password);
         try{
-            ResponseEntity<SharedMailDetails> response = this.executeGet(url, httpHeaders, SharedMailDetails.class);
-            return response.getBody();
+            ResponseEntity<SuccessResponse<SharedMailDetails>> response = this.executeGet(
+                    url,
+                    httpHeaders,
+                    new ParameterizedTypeReference<>() {}
+            );
+            if (response.getBody() != null){
+                return response.getBody().getData();
+            }
+            LOGGER.error("findMailDetailsOfUser response returned body as null");
         }catch (Exception ex){
             LOGGER.error("Error fetching user mail details from tracker services : {}", ex.getMessage(), ex);
-            throw ex;
         }
+        return null;
     }
 
     public UserOauthToken refreshOauth2Token(String email){
@@ -83,12 +97,20 @@ public class InternalClient extends AbstractHttpClient {
         httpHeaders.setBasicAuth(username, password);
 
         try{
-            ResponseEntity<UserOauthToken> response = this.executePost(url, null, httpHeaders, UserOauthToken.class);
-            return response.getBody();
+            ResponseEntity<SuccessResponse<UserOauthToken>> response = this.executePost(
+                    url,
+                    null,
+                    httpHeaders,
+                    new ParameterizedTypeReference<>() {}
+            );
+            if (response.getBody() != null){
+                return response.getBody().getData();
+            }
+            LOGGER.error("refreshOauth2Token response returned body as null");
         }catch (Exception ex){
             LOGGER.error("Error refreshing token using Internal Client : {}", ex.getMessage(), ex);
-            throw ex;
         }
+        return null;
     }
 
     public List<UserOauthToken> findAllAuthTokens(){
@@ -96,20 +118,20 @@ public class InternalClient extends AbstractHttpClient {
         String url = trackerUrl + "/api/internal/users/google";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(username, password);
-        HttpEntity<Void> request = new HttpEntity<>(httpHeaders);
         try{
-            ResponseEntity<List<UserOauthToken>> response =
-                    restTemplate.exchange(
-                            url,
-                            HttpMethod.GET,
-                            request,
-                            new ParameterizedTypeReference<>() {}
-                    );
-            return response.getBody();
+            ResponseEntity<SuccessResponse<List<UserOauthToken>>> response = this.executeGet(
+                    url,
+                    httpHeaders,
+                    new ParameterizedTypeReference<>() {}
+            );
+            if (response.getBody() != null){
+                return response.getBody().getData();
+            }
+            LOGGER.error("find auth tokens response returned body as null");
         }catch (Exception ex){
             LOGGER.error("Error fetching oauth tokens from tracker : {}", ex.getMessage(), ex);
-            return null;
         }
+        return null;
     }
 
     public UserOauthToken findUserAuthToken(String userId){
@@ -119,17 +141,18 @@ public class InternalClient extends AbstractHttpClient {
         httpHeaders.setBasicAuth(username, password);
         HttpEntity<Void> request = new HttpEntity<>(httpHeaders);
         try{
-            ResponseEntity<UserOauthToken> response =
-                    restTemplate.exchange(
-                            url,
-                            HttpMethod.GET,
-                            request,
-                            UserOauthToken.class
-                    );
-            return response.getBody();
+            ResponseEntity<SuccessResponse<UserOauthToken>> response = this.executeGet(
+                    url,
+                    httpHeaders,
+                    new ParameterizedTypeReference<>() {}
+            );
+            if (response.getBody() != null){
+                return response.getBody().getData();
+            }
+            LOGGER.error("findUserAuthToken response returned body as null");
         }catch (Exception ex){
             LOGGER.error("Error fetching user oauth token from tracker : {}", ex.getMessage(), ex);
-            return null;
         }
+        return null;
     }
 }
